@@ -1,0 +1,26 @@
+.formParent {
+    background: deepskyblue;
+
+}
+
+.container {
+    margin: 0px 50px;
+}
+
+.completedFalse {
+    color: rgb(42, 70, 0);
+    text-decoration: none;
+}
+
+.completedTrue {
+    color: rgb(255, 85, 85);
+    text-decoration: line-through;
+}
+
+.listclass {
+    display: flex;
+}
+
+.deleteBtn {
+    cursor: pointer;
+}

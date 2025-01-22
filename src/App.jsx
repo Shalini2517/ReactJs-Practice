@@ -1,0 +1,27 @@
+
+import "bootstrap/dist/css/bootstrap.min.css";
+import "./App.css"
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { Form } from "./components/form";
+import { Todolistapp } from "./components/todolistapp";
+import { Homepage } from "./components/home";
+import { Layout } from "./components/layout";
+import { NoPage } from "./components/noPage";
+import { UserRegisterForm } from "./components/userRegisterForm"
+
+
+export default function App() {
+  return (<>
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<Layout />}>
+          <Route index element={<Homepage />} />
+          <Route path="useForm" element={<Form />} />
+          <Route path="todoList" element={<Todolistapp />} />
+          <Route path="userRegisterForm" element={<UserRegisterForm />} />
+          <Route path="*" element={<NoPage />} />
+        </Route>
+      </Routes>
+    </BrowserRouter>
+  </>)
+}
