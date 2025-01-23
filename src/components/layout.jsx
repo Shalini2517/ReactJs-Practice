@@ -16,6 +16,9 @@ export const Layout = () => {
                 <li>
                     <Link to="/userRegisterForm">User Regiser Form</Link>
                 </li>
+                <li>
+                    <Link to="/simplecrud">Simple Crud</Link>
+                </li>
             </ul>
         </nav>
         <Outlet />
