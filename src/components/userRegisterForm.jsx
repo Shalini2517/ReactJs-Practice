@@ -74,17 +74,21 @@ export const UserRegisterForm = () => {
                     </tr>
                 </thead>
                 <tbody>
-                    {users.map((user, index) => (
-                        <tr key={index}>
-                            <td>{user.name}</td>
-                            <td>{user.email}</td>
-                            <td>{user.phone}</td>
-                            <td>{user.address}</td>
-                            <td>{user.gender}</td>
-                            <td>{user.terms ? 'Accepted' : 'Declined'}</td>
-                            <td><button className="btn btn-danger" onClick={() => deleteUser(index)}>Delete</button></td>
-                        </tr>
-                    ))}
+                    {users.length > 0 ? (
+                        <>{
+                            users.map((user, index) => (
+                                <tr key={index}>
+                                    <td>{user.name}</td>
+                                    <td>{user.email}</td>
+                                    <td>{user.phone}</td>
+                                    <td>{user.address}</td>
+                                    <td>{user.gender}</td>
+                                    <td>{user.terms ? 'Accepted' : 'Declined'}</td>
+                                    <td><button className="btn btn-danger" onClick={() => deleteUser(index)}>Delete</button></td>
+                                </tr>
+                            ))
+                        }</>
+                    ) : (<tr><td colSpan="7" className='text-center'><p>Useres Not Found</p></td></tr>)}
                 </tbody>
             </table>
         </div>

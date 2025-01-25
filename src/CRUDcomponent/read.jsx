@@ -1,3 +1,26 @@
-export const Read = () => {
-    return (<><h1>Hello this is Read component</h1></>)
+export const Read = ({ items }) => {
+    return (<>
+        <h1 className='mt-3 mb-2'>Hello this is Read component</h1>
+        <table className="table">
+            <thead className="thead-light">
+                <tr>
+                    <th>#</th>
+                    <th>Item Name</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {items.map((item, index) =>
+                    <tr key={index}>
+                        <td>{index + 1}</td>
+                        <td>{item}</td>
+                        <td>
+                            <button className="btn btn-warning">Edit</button>
+                            <button className="btn btn-danger">Delete</button>
+                        </td>
+                    </tr>
+                )}
+            </tbody>
+        </table>
+    </>)
 } 
