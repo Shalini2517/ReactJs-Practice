@@ -9,6 +9,7 @@ import { Layout } from "./components/layout";
 import { NoPage } from "./components/noPage";
 import { UserRegisterForm } from "./components/userRegisterForm"
 import { Simplecrud } from "./components/simpleCrud";
+import { Crudmanage } from "./CRUDcomponent/crudmanage"
 
 
 export default function App() {
@@ -21,6 +22,7 @@ export default function App() {
           <Route path="todoList" element={<Todolistapp />} />
           <Route path="userRegisterForm" element={<UserRegisterForm />} />
           <Route path="simplecrud" element={<Simplecrud />} />
+          <Route path="crudmanage" element={<Crudmanage />} />
           <Route path="*" element={<NoPage />} />
         </Route>
       </Routes>
