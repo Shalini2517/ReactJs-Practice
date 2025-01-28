@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { Update } from "./update";
 
 export const Create = ({ addItem, items, editItem, cancelBtn, updateItem }) => {
   const [fromData, setFormData] = useState("");
@@ -43,14 +44,7 @@ export const Create = ({ addItem, items, editItem, cancelBtn, updateItem }) => {
           </button>
         ) : (
           <>
-            <button
-              className="btn btn-info"
-              onClick={() => {
-                updateItem(fromData);
-              }}
-            >
-              Update
-            </button>
+            <Update updateItem={updateItem} fromData={fromData} />
             <button className="btn btn-secondary" onClick={cancelBtn}>
               Cancel
             </button>

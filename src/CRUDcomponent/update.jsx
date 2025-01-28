@@ -1,3 +1,11 @@
-export const Update = () => {
-    return (<><h1>Hello this is update component</h1></>)
-} 
+export const Update = ({ fromData, updateItem }) => {
+  return (
+    <button className="btn btn-info"
+      onClick={() => {
+        updateItem(fromData);
+      }}
+    >
+      Update
+    </button>
+  );
+};

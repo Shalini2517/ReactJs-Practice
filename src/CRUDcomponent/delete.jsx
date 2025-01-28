@@ -1,3 +1,12 @@
-export const Delete = () => {
-    return (<><h1>Hello this is Delete component</h1></>)
-} 
+export const Delete = ({ deleteItem, deleteIndex }) => {
+  return (
+    <button
+      className="btn btn-danger"
+      onClick={() => {
+        deleteItem(deleteIndex);
+      }}
+    >
+      Delete
+    </button>
+  );
+};

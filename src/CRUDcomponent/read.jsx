@@ -1,3 +1,5 @@
+import { Delete } from "./delete";
+
 export const Read = ({ items, editItemBtn, deleteItem }) => {
   return (
     <>
@@ -24,14 +26,7 @@ export const Read = ({ items, editItemBtn, deleteItem }) => {
                 >
                   Edit
                 </button>
-                <button
-                  className="btn btn-danger"
-                  onClick={() => {
-                    deleteItem(index);
-                  }}
-                >
-                  Delete
-                </button>
+                <Delete deleteItem={deleteItem} deleteIndex={index} />
               </td>
             </tr>
           ))}
