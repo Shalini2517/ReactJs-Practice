@@ -1,12 +1,11 @@
 import React, { useState } from "react";
 import { Create } from "./create";
 import { Read } from "./read";
-import { Delete } from "./delete";
-import { Update } from "./update";
 
 export const Crudmanage = () => {
   const [items, setItems] = useState([]);
   const [editItem, setEditItem] = useState(null);
+  const [filter, setFilter] = useState("");
 
   const addItem = (item) => {
     setItems((prevItems) => [...prevItems, item]);
@@ -34,6 +33,10 @@ export const Crudmanage = () => {
     setEditItem(null);
   };
 
+  const filterItems = items.filter((item) =>
+    item.toLowerCase().includes(filter.toLowerCase())
+  );
+
   return (
     <>
       <div className="container">
@@ -46,11 +49,24 @@ export const Crudmanage = () => {
             updateItem={updateItem}
           />
           {items.length > 0 ? (
-            <Read
-              items={items}
-              editItemBtn={editItemBtn}
-              deleteItem={deleteItem}
-            />
+            <>
+              <div className="text-end" style={{ width: "20%" }}>
+                <input
+                  className="form-control mt-3"
+                  type="text"
+                  placeholder="search..."
+                  value={filter}
+                  onChange={(e) => {
+                    setFilter(e.target.value);
+                  }}
+                />
+              </div>
+              <Read
+                items={filterItems}
+                editItemBtn={editItemBtn}
+                deleteItem={deleteItem}
+              />
+            </>
           ) : (
             <h4 className="mt-4 mbt-3">Items not found...</h4>
           )}

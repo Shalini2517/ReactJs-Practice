@@ -8,5 +8,5 @@ export const Delete = ({ deleteItem, deleteIndex }) => {
     >
       Delete
     </button>
-  );
+  ); 
 };
