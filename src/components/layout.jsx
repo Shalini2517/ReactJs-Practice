@@ -22,6 +22,9 @@ export const Layout = () => {
                 <li className="nav-item">
                     <Link className="nav-link" to="/crudmanage">Multy Component Crud</Link>
                 </li>
+                <li className="nav-item">
+                    <Link className="nav-link" to="/userDetails">User Details with CRUD</Link>
+                </li>
             </ul>
         </nav>
         <Outlet />
