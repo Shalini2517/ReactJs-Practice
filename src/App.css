@@ -30,4 +30,9 @@ td, th {
     text-align: left;
     padding: 8px;
   }
+
+.errorMessage{
+color: red;
+font-size: small;
+}
   
