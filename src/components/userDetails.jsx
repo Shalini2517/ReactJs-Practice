@@ -5,6 +5,7 @@ export const UserDetails = () => {
   const [errors, setErrors] = useState({});
   const [editId, setEditId] = useState(null);
   const [filterUser, setFilterUser] = useState("");
+  const [imgPrev, setImgPrev] = useState(null);
   const [formData, setFormData] = useState({
     id: "",
     name: "",
@@ -13,6 +14,7 @@ export const UserDetails = () => {
     gender: "",
     location: "",
     terms: false,
+    profileImg: "",
   });
 
   const mailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -35,17 +37,35 @@ export const UserDetails = () => {
 
     if (!formData.gender) newErrors.gender = "Gender is required";
     if (!formData.location) newErrors.location = "Location is required";
+    if (!formData.profileImg) newErrors.profileImg = "Prolie image is required";
 
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0; // Returns true if no errors
   };
 
   const handelInputs = (e) => {
-    const { name, value, type, checked } = e.target;
-    setFormData((prevFormData) => ({
-      ...prevFormData,
-      [name]: type === "checkbox" ? checked : value,
-    }));
+    const { name, value, type, checked, files } = e.target;
+
+    if (type === "file") {
+      const profileImgFile = files[0];
+      if (profileImgFile) {
+        prevImgShow(profileImgFile);
+        setFormData((prevFormData) => ({
+          ...prevFormData,
+          [name]: profileImgFile,
+        }));
+      }
+    } else {
+      setFormData((prevFormData) => ({
+        ...prevFormData,
+        [name]: type === "checkbox" ? checked : value,
+      }));
+    }
+  };
+
+  const prevImgShow = (img) => {
+    const imageURL = URL.createObjectURL(img);
+    setImgPrev(imageURL);
   };
 
   const handelSubmit = (e) => {
@@ -75,9 +95,12 @@ export const UserDetails = () => {
       gender: "",
       location: "",
       terms: false,
+      profileImg: "",
     });
+    document.getElementById("img").value = "";
     setErrors({});
     setEditId(null);
+    setImgPrev(null);
   };
 
   const deleteUser = (userId) => {
@@ -91,6 +114,7 @@ export const UserDetails = () => {
     const userToEdit = users.find((user) => user.id === userId);
     console.log(userToEdit);
     setFormData({ ...userToEdit });
+    prevImgShow(userToEdit.profileImg);
   };
 
   const filterUsersList = users.filter((user) =>
@@ -114,6 +138,21 @@ export const UserDetails = () => {
                 onChange={handelInputs}
               />
               {errors.name && <div className="errorMessage">{errors.name}</div>}
+            </div>
+            <div className="form-group mb-2">
+              <label htmlFor="img">Profile Image : </label>
+              <input
+                type="file"
+                id="img"
+                className="form-control"
+                name="profileImg"
+                accept="image/*"
+                onChange={handelInputs}
+              />
+              {imgPrev && <img src={imgPrev} width="100" alt="Profile pic" />}
+              {errors.profileImg && (
+                <div className="errorMessage">{errors.profileImg}</div>
+              )}
             </div>
             <div className="form-group mb-2">
               <label htmlFor="mail">E-mail : </label>
@@ -182,7 +221,7 @@ export const UserDetails = () => {
                 <option value="">Select City</option>
                 <option value="Chennai">Chennai</option>
                 <option value="Pondy">Pondy</option>
-                <option value="Kerla">Kerla</option>
+                <option value="kerala">kerala</option>
               </select>
               {errors.location && (
                 <div className="errorMessage">{errors.location}</div>
@@ -232,6 +271,7 @@ export const UserDetails = () => {
                   <tr>
                     <th>#</th>
                     <th>Name</th>
+                    <th>Profile Picture</th>
                     <th>E-mail</th>
                     <th>Phone</th>
                     <th>Gender</th>
@@ -246,6 +286,14 @@ export const UserDetails = () => {
                       <tr key={index}>
                         <td>{index + 1}</td>
                         <td>{user.name}</td>
+                        <td>
+                          {user.profileImg.name}{" "}
+                          <img
+                            src={URL.createObjectURL(user.profileImg)}
+                            alt="Profile Pre"
+                            width="50"
+                          />
+                        </td>
                         <td>{user.email}</td>
                         <td>{user.phone}</td>
                         <td>{user.gender}</td>
