@@ -4,6 +4,7 @@ export const UserDetails = () => {
   const [users, setUsers] = useState([]);
   const [errors, setErrors] = useState({});
   const [editId, setEditId] = useState(null);
+  const [filterUser, setFilterUser] = useState("");
   const [formData, setFormData] = useState({
     id: "",
     name: "",
@@ -91,6 +92,10 @@ export const UserDetails = () => {
     console.log(userToEdit);
     setFormData({ ...userToEdit });
   };
+
+  const filterUsersList = users.filter((user) =>
+    user.name.toLowerCase().includes(filterUser.toLowerCase())
+  );
 
   return (
     <div className="container">
@@ -210,52 +215,73 @@ export const UserDetails = () => {
         </div>
         <div className="col-lg-12 col-md-12 col-sm-12">
           {users.length > 0 ? (
-            <table className="table">
-              <thead>
-                <tr>
-                  <th>#</th>
-                  <th>Name</th>
-                  <th>E-mail</th>
-                  <th>Phone</th>
-                  <th>Gender</th>
-                  <th>Location</th>
-                  <th>Terms & Cond</th>
-                  <th>Actions</th>
-                </tr>
-              </thead>
-              <tbody>
-                {users.map((user, index) => (
-                  <tr key={index}>
-                    <td>{index + 1}</td>
-                    <td>{user.name}</td>
-                    <td>{user.email}</td>
-                    <td>{user.phone}</td>
-                    <td>{user.gender}</td>
-                    <td>{user.location}</td>
-                    <td>{user.terms == true ? "Accepted" : "Rejected"}</td>
-                    <td>
-                      <button
-                        className="btn btn-warning"
-                        onClick={() => {
-                          editBtn(user.id);
-                        }}
-                      >
-                        Edit
-                      </button>{" "}
-                      &nbsp;
-                      <button
-                        className="btn btn-danger"
-                        onClick={() => {
-                          deleteUser(user.id);
-                        }}
-                      >
-                        Delete
-                      </button>
-                    </td>
+            <>
+              <div className="pb-2">
+                <label htmlFor="">Search User : </label>
+                <input
+                  type="text"
+                  placeholder="Search..."
+                  value={filterUser}
+                  onChange={(e) => {
+                    setFilterUser(e.target.value);
+                  }}
+                />
+              </div>
+              <table className="table">
+                <thead>
+                  <tr>
+                    <th>#</th>
+                    <th>Name</th>
+                    <th>E-mail</th>
+                    <th>Phone</th>
+                    <th>Gender</th>
+                    <th>Location</th>
+                    <th>Terms & Cond</th>
+                    <th>Actions</th>
                   </tr>
-                ))}
-              </tbody>
-            </table>
+                </thead>
+                <tbody>
+                  {filterUsersList.length > 0 ? (
+                    filterUsersList.map((user, index) => (
+                      <tr key={index}>
+                        <td>{index + 1}</td>
+                        <td>{user.name}</td>
+                        <td>{user.email}</td>
+                        <td>{user.phone}</td>
+                        <td>{user.gender}</td>
+                        <td>{user.location}</td>
+                        <td>{user.terms == true ? "Accepted" : "Rejected"}</td>
+                        <td>
+                          <button
+                            className="btn btn-warning"
+                            onClick={() => {
+                              editBtn(user.id);
+                            }}
+                          >
+                            Edit
+                          </button>{" "}
+                          &nbsp;
+                          <button
+                            className="btn btn-danger"
+                            onClick={() => {
+                              deleteUser(user.id);
+                            }}
+                          >
+                            Delete
+                          </button>
+                        </td>
+                      </tr>
+                    ))
+                  ) : (
+                    <tr>
+                      <td colSpan="8" className="text-center text-danger">
+                        No User Found
+                      </td>
+                    </tr>
+                  )}
+                </tbody>
+              </table>
+            </>
           ) : (
             <p>Users Not Found</p>
           )}
