@@ -104,6 +104,11 @@ export const Layout = () => {
                   </li>
                 </ul>
               </li>
+              <li className="nav-item">
+                <Link to="/jsonApiCrud" className="nav-link">
+                  Json-server CRUD
+                </Link>
+              </li>
             </ul>
           </div>
         </div>

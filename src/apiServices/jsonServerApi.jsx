@@ -9,6 +9,8 @@ export const JsonServerApi = () => {
     restApi();
   }, []);
 
+  // to run the CLI in terminal "json-server --watch db.json --port 5000" after only url work!
+
   const restApi = async () => {
     try {
       const response = await axios.get(url);

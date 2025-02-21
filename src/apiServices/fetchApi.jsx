@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from "react";
 export const FetchApi = () => {
   const [isLoading, setIsLoading] = useState(true);
-  const [data, setData] = useState(null);
+  const [data, setData] = useState([]);
   const [error, setError] = useState(null);
+  const [userFilter, setUserFilter] = useState("");
 
   useEffect(() => {
     fetchApiMethod();
@@ -27,17 +28,35 @@ export const FetchApi = () => {
       });
   };
 
+  const filteredData = data.filter((value) =>
+    value.name.toLowerCase().includes(userFilter.toLocaleLowerCase())
+  );
+
   return (
     <>
       <h5>Fetch Api</h5>
       {isLoading && <p>Loading...</p>}
       {error && <p className="text-danger">Error: {error}</p>}
-      {data !== null ? (
-        <ul>
-          {data.map((value) => (
-            <li key={value.id}>User Name : {value.name}</li>
-          ))}
-        </ul>
+      {data.length > 0 ? (
+        <>
+          <input
+            type="text"
+            placeholder="Search..."
+            value={userFilter}
+            onChange={(e) => {
+              setUserFilter(e.target.value);
+            }}
+          />
+          <ul>
+            {filteredData.length > 0 ? (
+              filteredData.map((value) => (
+                <li key={value.id}>User Name: {value.name}</li>
+              ))
+            ) : (
+              <p>No users found</p>
+            )}
+          </ul>
+        </>
       ) : (
         <p>No data found</p>
       )}

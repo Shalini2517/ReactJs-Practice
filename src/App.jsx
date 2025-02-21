@@ -16,6 +16,7 @@ import { JsonServerApi } from "./apiServices/jsonServerApi";
 import { PromiseApi } from "./apiServices/promiseAsyncAwait";
 import { AxiosApi } from "./apiServices/axiosApi";
 import { FetchApi } from "./apiServices/fetchApi";
+import { JsonApiCrud } from "./jsonCrud/jsonApiCrud";
 
 export default function App() {
   return (
@@ -34,6 +35,7 @@ export default function App() {
             <Route path="jsonServerApi" element={<JsonServerApi />} />
             <Route path="promiseApi" element={<PromiseApi />} />
             <Route path="axiosApi" element={<AxiosApi />} />
+            <Route path="jsonApiCrud" element={<JsonApiCrud />} />
             <Route path="*" element={<NoPage />} />
           </Route>
         </Routes>
