@@ -56,6 +56,19 @@ export const JsonApiCrud = () => {
     setFormData("");
   };
 
+  const deleteUser = async (userId) => {
+    try {
+      const deleteResponse = await axios.delete(`${apiUrl}/${userId}`);
+      console.log(deleteResponse);
+      setUsers(users.filter((user) => user.id !== userId));
+    } catch (error) {
+      console.error("Error : " + error);
+      setCatchErr("Error : " + error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
     <>
       <h5 className="mb-3">
@@ -88,7 +101,15 @@ export const JsonApiCrud = () => {
               <ul>
                 {users.map((user, index) => (
                   <li key={user.id} className="userLi">
-                    {index + 1} - {user.name}
+                    {index + 1} - {user.name} &nbsp;
+                    <button
+                      className="btn btn-outline-danger"
+                      onClick={() => {
+                        deleteUser(user.id);
+                      }}
+                    >
+                      Delete
+                    </button>
                   </li>
                 ))}
               </ul>
