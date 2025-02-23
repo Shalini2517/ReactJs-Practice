@@ -1,6 +1,7 @@
 import axios from "axios";
 import { useState, useEffect } from "react";
 export const JsonApiCrud = () => {
+  const [editId, setEditId] = useState(null);
   const [formData, setFormData] = useState("");
   const [users, setUsers] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -31,8 +32,24 @@ export const JsonApiCrud = () => {
       const newUser = { name: formData };
       const response = await axios.post(apiUrl, newUser);
       console.log(response);
-
       setUsers([...users, response.data]);
+    } catch (error) {
+      console.error("Error : " + error);
+      setCatchErr("Error : " + error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const axiosPut = async () => {
+    try {
+      const updateUser = { name: formData };
+      const response = await axios.put(`${apiUrl}/${editId}`, updateUser);
+      console.log(response);
+      const afterUpdateUsers = users.map((user) =>
+        user.id === editId ? response.data : user
+      );
+      setUsers(afterUpdateUsers);
     } catch (error) {
       console.error("Error : " + error);
       setCatchErr("Error : " + error);
@@ -47,13 +64,14 @@ export const JsonApiCrud = () => {
       alert("Username required!");
     } else {
       setLoading(true);
-      axiosPost();
+      editId ? axiosPut() : axiosPost();
       formReset();
     }
   };
 
   const formReset = () => {
     setFormData("");
+    setEditId(null);
   };
 
   const deleteUser = async (userId) => {
@@ -67,6 +85,11 @@ export const JsonApiCrud = () => {
     } finally {
       setLoading(false);
     }
+  };
+
+  const editUser = (userId) => {
+    setEditId(userId);
+    setFormData(users.find((user) => user.id === userId).name);
   };
 
   return (
@@ -87,7 +110,19 @@ export const JsonApiCrud = () => {
             onChange={(e) => setFormData(e.target.value)}
           />
         </div>
-        <button className="btn btn-success mt-2">Add</button>
+        {editId == null ? (
+          <button className="btn btn-success mt-2">Add</button>
+        ) : (
+          <>
+            <button className="btn btn-outline-info  mt-2">Update</button>
+            <button
+              className="btn btn-outline-secondary  mt-2"
+              onClick={formReset}
+            >
+              Cancel
+            </button>
+          </>
+        )}
       </form>
 
       {loading ? (
@@ -102,6 +137,13 @@ export const JsonApiCrud = () => {
                 {users.map((user, index) => (
                   <li key={user.id} className="userLi">
                     {index + 1} - {user.name} &nbsp;
+                    <button
+                      className="btn btn-outline-warning"
+                      onClick={() => editUser(user.id)}
+                    >
+                      Edit
+                    </button>
+                    &nbsp;
                     <button
                       className="btn btn-outline-danger"
                       onClick={() => {
